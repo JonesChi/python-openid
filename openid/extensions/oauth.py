@@ -50,7 +50,7 @@ class OAuthResponse(Extension):
     @classmethod
     def fromSuccessResponse(cls, success_response, signed=True):
         args = success_response.getSignedNS(NS_URI)
-        if args == {}:
+        if args == None:
             return None
         oauth_response = cls()
         oauth_response.parseExtensionArgs(args)
