@@ -34,8 +34,8 @@ class OAuthRequest(Extension):
     # Set the state of this request to be that expressed in these
     # OAuth arguments
     def parseExtensionArgs(args):
-        self.consumer = args['consumer']
-        self.scope = args['scope']
+        self.consumer = args.get('consumer')
+        self.scope = args.get('scope')
 
 # A OAuth request token response, sent from a provider
 # to a relying party
@@ -45,7 +45,7 @@ class OAuthResponse(Extension):
         self.ns_uri = NS_URI
         self.request_token = request_token
         self.scope = scope
-        
+
     # Create a Response object from an openid.consumer.consumer.SuccessResponse
     @classmethod
     def fromSuccessResponse(cls, success_response, signed=True):
@@ -61,8 +61,8 @@ class OAuthResponse(Extension):
     # if strict is specified, raise an exception when bad data is
     # encountered
     def parseExtensionArgs(self, args, strict=False):
-        self.request_token = args['request_token']
-        self.scope = args['scope']
+        self.request_token = args.get('request_token')
+        self.scope = args.get('scope')
 
     def getExtensionArgs(self):
         ns_args = {}
