@@ -6,8 +6,8 @@ NS_URI = "http://specs.openid.net/extensions/oauth/1.0"
 class OAuthRequest(Extension):
     # An OAuth token request, sent from a relying
     # party to a provider
-    def __init__(self, consumer=None, scope=None):
-        self.ns_alias = "oauth"
+    def __init__(self, ns_alias='oauth', consumer=None, scope=None):
+        self.ns_alias = ns_alias
         self.ns_uri = NS_URI
         self.consumer = consumer
         self.scope = scope
@@ -40,8 +40,8 @@ class OAuthRequest(Extension):
 # A OAuth request token response, sent from a provider
 # to a relying party
 class OAuthResponse(Extension):
-    def __init__(self, request_token=None, scope=None):
-        self.ns_alias = "oauth"
+    def __init__(self, ns_alias='oauth', request_token=None, scope=None):
+        self.ns_alias = ns_alias
         self.ns_uri = NS_URI
         self.request_token = request_token
         self.scope = scope
@@ -49,7 +49,7 @@ class OAuthResponse(Extension):
     # Create a Response object from an openid.consumer.consumer.SuccessResponse
     @classmethod
     def fromSuccessResponse(cls, success_response, signed=True):
-        args = success_response.getSignedNS(NS_URI)
+        args = success_response.extensionResponse(NS_URI, signed)
         if args == None:
             return None
         oauth_response = cls()
